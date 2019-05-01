@@ -1,6 +1,13 @@
 # Bacterial_quasispecies
 Finds read which are discordant to the consensus sequence
 
+The automated script takes the SRA accession of a long read sequenced genome and its closed consensus sequence and conducts the following analysis automatically. The script uses 8 cores and takes about 3-6 hours.
+
+```bash
+bash Auto_script SRR5856179 GCF_001985605.1_ASM198560v1_genomic.fna
+```
+
+
 Download fastq file of long reads
 
 ```bash

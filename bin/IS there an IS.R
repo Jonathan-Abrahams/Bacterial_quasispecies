@@ -32,7 +32,7 @@ is_IS=function(read.name)
     return(read.name)
   }
 }
-ready=read.delim("read.names",header=F)
+ready=read.delim(args[3],header=F)
 results_vector=vector()
 for(i in c(1:nrow(ready)))
 {
