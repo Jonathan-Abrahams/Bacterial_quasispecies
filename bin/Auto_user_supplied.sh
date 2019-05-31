@@ -1,4 +1,4 @@
-fastq-dump $1
+#fastq-dump $1
 
 bash  blast_prep_data.sh $1.fastq
 

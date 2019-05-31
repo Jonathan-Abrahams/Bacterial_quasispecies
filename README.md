@@ -62,5 +62,5 @@ Rscript IS\ there\ an\ IS.R SRR5851457.fastq_blast_results/ SRR5851457.fastq_bla
 
 Generate circos plots
 ```bash
- Rscript Circlize\ generic.R all_SRR5851457_last_frames all_SRR5851457_last_frames.pdf
+Rscript temp_circlize.R all_UK54_last_frames UK54_new_processed_blast_results UK54_colour2.jpg kolp.txt
 ```
