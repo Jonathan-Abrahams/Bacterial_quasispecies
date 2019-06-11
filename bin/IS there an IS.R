@@ -27,7 +27,7 @@ is_IS=function(read.name)
   o1=findOverlaps(Read_IS,kek1)
   o2=findOverlaps(Read_IS,kek2)
   
-  if(length(c(o1,o2))>=1)
+  if(length(o1)>=1|length(o2)>=1)
   {
     return(read.name)
   }
@@ -36,7 +36,7 @@ ready=read.delim(args[3],header=F)
 results_vector=vector()
 for(i in c(1:nrow(ready)))
 {
-  print(i)
+  print(paste("Args[3]: ",i))
   kol=is_IS(ready$V1[i])
   print(kol)
   if(length(kol>=1))

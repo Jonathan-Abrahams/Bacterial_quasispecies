@@ -41,4 +41,4 @@ cd ..
 
 #Rscript temp_circlize.R all_UK54_last_frames UK54_new_processed_blast_results UK54_colour2.jpg kolp.txt
 
-Rscript ./bin/Circlize_basketball.R ./$1.blast_results_final/all_$1_last_frames $1.blast_results_final/ $1_colour.jpg kolp.txt
+Rscript Circlize_basketball.R ./$1.blast_results_final/all_$1_last_frames $1.blast_results_final/ $1_colour.jpg kolp.txt
