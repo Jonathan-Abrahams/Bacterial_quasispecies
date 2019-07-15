@@ -5,9 +5,9 @@ args = commandArgs(trailingOnly=TRUE)
 library("circlize")
 framey=read.csv(args[1],sep=" ",header=F)
 kolp=read.delim(args[4],sep=" ",header=F)
-
+framey$V1=framey$V1-1
 head(kolp)
-framey=framey[which(framey$V1%in%kolp$V1),]
+#framey=framey[which(framey$V1%in%kolp$V1),]
 framey$Category="ZERO"
 
 
@@ -17,7 +17,12 @@ framey$Category="ZERO"
 
 for(i in c(1:nrow(framey)))
 {
-  temp123=read.delim(paste(args[2],"/",framey$V1[i],".fa_blast_table.txtkek",sep=""),sep=" ",header=F)
+  #all_UK54_final.fasta.blast_results/x00000001.fa_blast_table.txt
+ lenny=nchar(framey$V1[i]) 
+ #cat(args[2],"/","x",rep("0",c(8-lenny)),framey$V1[i],".fa_blast_table.txtkek",sep="") 
+ #cat(args[2],"/","x",rep("0",c(8-lenny)),framey$V1[i],".fa_blast_table.txtkek",sep="") 
+ 
+ temp123=read.delim(cat(args[2],"/","x",rep("0",c(8-lenny)),framey$V1[i],".fa_blast_table.txtkek",sep=""),sep=" ",header=F)
   
  # temp123=read.delim(paste(args[2],"/",framey$V1[i],".fa_blast_table.txt_kek",sep=""),sep=" ",header=F)
   
