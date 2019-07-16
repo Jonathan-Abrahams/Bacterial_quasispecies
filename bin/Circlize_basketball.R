@@ -3,11 +3,20 @@ args = commandArgs(trailingOnly=TRUE)
 
 #cirlize full
 library("circlize")
-framey=read.csv(args[1],sep=" ",header=F)
-kolp=read.delim(args[4],sep=" ",header=F)
+library("stringr")
+framey=read.csv(args[1],sep=" ",header=F,stringsAsFactors = F)
+kolp=read.delim(args[4],sep=" ",header=F,stringsAsFactors = F)
 
+framey$V1=framey$V1-1
+for(i in c(1:nrow(framey)))
+{
+  lenny=nchar(framey$V1[i])
+  
+  framey$V1[i]=paste("x",paste(rep("0",c(8-lenny)),collapse=""),c(framey$V1[i]),sep="")
+}
+framey=framey[framey$V1%in%kolp$V1,]
 head(kolp)
-framey=framey[which(framey$V1%in%kolp$V1),]
+#framey=framey[which(framey$V1%in%kolp$V1),]
 framey$Category="ZERO"
 
 
@@ -17,7 +26,12 @@ framey$Category="ZERO"
 
 for(i in c(1:nrow(framey)))
 {
-  temp123=read.delim(paste(args[2],"/",framey$V1[i],".fa_blast_table.txtkek",sep=""),sep=" ",header=F)
+  #all_UK54_final.fasta.blast_results/x00000001.fa_blast_table.txt
+ lenny=nchar(framey$V1[i]) 
+ #cat(args[2],"/","x",rep("0",c(8-lenny)),framey$V1[i],".fa_blast_table.txtkek",sep="") 
+ #cat(args[2],"/","x",rep("0",c(8-lenny)),framey$V1[i],".fa_blast_table.txtkek",sep="") 
+ 
+ temp123=read.delim(paste(args[2],"/",framey$V1[i],".fa_blast_table.txtkek",sep=""),sep=" ",header=F)
   
  # temp123=read.delim(paste(args[2],"/",framey$V1[i],".fa_blast_table.txt_kek",sep=""),sep=" ",header=F)
   
@@ -36,7 +50,8 @@ for(i in c(1:nrow(framey)))
     framey$Category[i]="INV"
   }
 }
-
+framey_OG=framey
+write.csv(framey,"Reads.csv")
 
 
 #library(DB)
@@ -48,10 +63,9 @@ framey$V1="Genome"
 #Great plot!
 
 jpeg(args[3])
-circos.genomicInitialize(framey[,c(1:3)],major.by = 500000,axis.labels.cex = 1)
-TF=c(framey$V2>1260000&framey$V2<1730000)&c(framey$V3>1260000&framey$V3<1750000)
-write.csv(framey,"Reads.csv")
-for(i in c(1:nrow(framey[])))
+circos.genomicInitialize(framey[,c(1:3)],axis.labels.cex = 0.8)
+#TF=c(framey$V2>1260000&framey$V2<1730000)&c(framey$V3>1260000&framey$V3<1750000)
+for(i in c(1:nrow(framey)))
 {
  
     if(framey$Category[i]=="INV")
@@ -69,5 +83,25 @@ for(i in c(1:nrow(framey[])))
   
 }
 dev.off()
+
+# 
+# 
+# for(i in c(1:10))
+# {
+#   
+#   if(framey$Category[i]=="INV")
+#   {
+#     circos.link("Genome", framey$V2[i], "Genome", framey$V3[i],h.ratio = 0.5,col="blue")
+#     print("kek")
+#     
+#   }
+#   else{
+#     circos.link("Genome", framey$V2[i], "Genome", framey$V3[i],h.ratio = 0.5,col="red")
+#     
+#     
+#   }
+#   
+#   
+# }
 
 
