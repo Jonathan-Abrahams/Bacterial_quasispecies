@@ -105,7 +105,7 @@ funky=function(x)
       
       tingy=which(abs(genome_gaps-read_gaps)>=30000)
       more_than=which(abs(genome_gaps-read_gaps)>=30000)
-      less_than=which(abs(genome_gaps-read_gaps)<=3800000)
+      less_than=which(abs(genome_gaps-read_gaps)<=3400000)
       if(length(which(more_than==less_than))>=1)
       {
         #kek$Frame=find_max_overlappies(kek$Frame)
@@ -132,8 +132,8 @@ funky=function(x)
 }
 library(lme4)
 tic()
-#lol=mclapply(files, funky,mc.cores = 8)
-lol=lapply(files, funky)
+lol=mclapply(files, funky,mc.cores = 8)
+#lol=lapply(files, funky)
 
 
 #lol=lapply(files, funky)

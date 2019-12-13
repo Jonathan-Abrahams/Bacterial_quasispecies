@@ -1,24 +1,20 @@
 # Bacterial_quasispecies
 Finds read which are discordant to the consensus sequence
 
-The automated script takes the SRA accession of a long read sequenced genome and its closed consensus sequence and conducts the following analysis automatically. The script uses 8 cores and takes about 3-6 hours.
+Blasting gets very complicated when there are multiple regions of homology in the reference sequence. To simplify the process we therefore deplete the reference genome of any high homology regions.
+(UNTESTED ON SERVER)
 
-```bash
-bash Auto_script SRR5856179 GCF_001985605.1_ASM198560v1_genomic.fna
+```
+Rscript remove_reps_from_fasta.R example.fasta
 ```
 
-
-Download fastq file of long reads
-
-```bash
-fastq-dump SRR5851457
-```
 
 Prepare the data by splitting each read to its own file and making folders etc.
 
 ```bash
-bash  blast_prep_data.sh SRR5851457.fastq
+bash  blast_prep_data.sh UK54.fastq
 ```
+
 
 Create a blastdb
 

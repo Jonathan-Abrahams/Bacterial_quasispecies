@@ -4,10 +4,10 @@ args = commandArgs(trailingOnly=TRUE)
 #cirlize full
 library("circlize")
 framey=read.csv(args[1],sep=" ",header=F)
-kolp=read.delim(args[4],sep=" ",header=F)
+#kolp=read.delim(args[4],sep=" ",header=F)
 
-head(kolp)
-framey=framey[which(framey$V1%in%kolp$V1),]
+#head(kolp)
+#framey=framey[which(framey$V1%in%kolp$V1),]
 framey$Category="ZERO"
 
 
