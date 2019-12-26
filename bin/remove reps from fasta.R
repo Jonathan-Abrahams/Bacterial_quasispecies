@@ -9,17 +9,30 @@ kek=readDNAStringSet(args[1])
 
 seq123=seq(1,nchar(kek[[1]]),200)
 kolp=DNAStringSet(x = rep("A",length(seq123)-1))
-for(k in c(17592:length(seq123)))
-{
-  kolp[[k]]=kek[[1]][seq123[k]:c(seq123[k]+1000)]
-  
-  
-}
-writeXStringSet(x = kolp[1:20406],filepath = "UK54_1kb_200_step.fa")
+
+qoa=lapply(seq123,function(x)
+  {
+  # print(x)
+  if(x<c(length(kek[[1]])-2000))
+  {
+    return(kek[[1]][x:c(x+1000)])
+    
+  }
+})
+listy123=DNAStringSet(unlist(qoa,recursive = T))
+names(listy123)=c(1:length(listy123))
+# for(k in c(1:c(length(seq123)-1)))
+# {
+#   kolp[[k]]=kek[[1]][seq123[k]:c(seq123[k]+1000)]
+#   
+#   
+# }
+ writeXStringSet(x = listy123,filepath = "UK54_1kb_200_step.fa")
 
 
 #Run this command on server to find rep genes:
-system("blastn -task megablast -query UK54_1kb_200_step_rename.fa -db Bp_UK54_R941.flipflop.porechop.ctg.lay.fa -outfmt 6  -out UK54_rep_blast_1kb_200_step_no_redunc")
+system("makeblastdb -in Bp_UK54_R941.flipflop.porechop.ctg.lay.fa -parse_seqids -dbtype nucl")
+system("blastn -task megablast -query UK54_1kb_200_step.fa -db Bp_UK54_R941.flipflop.porechop.ctg.lay.fa -outfmt 6  -out UK54_rep_blast_1kb_200_step_no_redunc")
 
 UK54_reps=read.delim("UK54_rep_blast_1kb_200_step_no_redunc",row.names = NULL,stringsAsFactors = F,header=F)
 dups=names(table(UK54_reps$V1)[as.numeric(which(table(UK54_reps$V1)>1))])
