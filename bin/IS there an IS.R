@@ -32,7 +32,7 @@ is_IS=function(read.name)
     return(read.name)
   }
 }
-ready=read.delim(args[3],header=F)
+ready=read.delim(args[3],header=F,stringsAsFactors=F)
 results_vector=vector()
 for(i in c(1:nrow(ready)))
 {
@@ -49,4 +49,4 @@ for(i in c(1:nrow(ready)))
 print("All_done")
 kolp=data.frame(IS=results_vector)
 kolp=kolp[!is.na(kolp$IS),]
-write.table(kolp,"kolp.txt",col.names = F,row.names = F)
+write.table(kolp,"kolp.txt",col.names = F,row.names = F,quote=F)

@@ -27,14 +27,14 @@ names(listy123)=c(1:length(listy123))
 #   
 #   
 # }
- writeXStringSet(x = listy123,filepath = "UK54_1kb_200_step.fa")
+ writeXStringSet(x = listy123,filepath = paste(args[1],"_non_redunc.fasta",sep=""))
 
 
 #Run this command on server to find rep genes:
-system("makeblastdb -in Bp_UK54_R941.flipflop.porechop.ctg.lay.fa -parse_seqids -dbtype nucl")
-system("blastn -task megablast -query UK54_1kb_200_step.fa -db Bp_UK54_R941.flipflop.porechop.ctg.lay.fa -outfmt 6  -out UK54_rep_blast_1kb_200_step_no_redunc")
+system(paste("makeblastdb -in", args[1], "-parse_seqids -dbtype nucl"))
+system(paste("blastn -task megablast -query", paste(args[1],"_non_redunc.fasta",sep=""), "-db",args[1], "-outfmt 6  -out",paste(args[1],"_non_redunc.fasta_blast",sep="")))
 
-UK54_reps=read.delim("UK54_rep_blast_1kb_200_step_no_redunc",row.names = NULL,stringsAsFactors = F,header=F)
+UK54_reps=read.delim(paste(args[1],"_non_redunc.fasta_blast",sep=""),row.names = NULL,stringsAsFactors = F,header=F)
 dups=names(table(UK54_reps$V1)[as.numeric(which(table(UK54_reps$V1)>1))])
 dups_1=data.frame(Start_rep=UK54_reps$V9[UK54_reps$V1%in%dups],
                   End_rep=UK54_reps$V10[UK54_reps$V1%in%dups])
@@ -55,6 +55,6 @@ for(k in c(1:nrow(dups_2)))
     
 }
 kek[[1]]=kek[[1]][which(seq==1)]
-writeXStringSet(x = kek,filepath = "UK54_depleted7.fa")
+writeXStringSet(x = kek,filepath = paste(args[1],"depleted.fasta",sep="_"))
 data111=data.frame(All=seq)
 write.table(data111,"UK54_depleted_dictionary_genome.txt")

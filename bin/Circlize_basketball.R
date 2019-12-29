@@ -17,6 +17,7 @@ framey$Category="ZERO"
 
 for(i in c(1:nrow(framey)))
 {
+print(i)
   temp123=read.delim(paste(args[2],"/",framey$V1[i],".fa_blast_table.txtkek",sep=""),sep=" ",header=F)
   
  # temp123=read.delim(paste(args[2],"/",framey$V1[i],".fa_blast_table.txt_kek",sep=""),sep=" ",header=F)
@@ -26,6 +27,7 @@ for(i in c(1:nrow(framey)))
   tempy_kek=vector()
   for(q in c(1:c(nrow(temp123))))
   {
+#print(q)
     tempy_kek[q]=temp123$V10[q]-temp123$V9[q]
     
   }
