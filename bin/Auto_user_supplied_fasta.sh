@@ -1,10 +1,10 @@
 #fastq-dump $1
 
-bash  ./bin/blast_prep_data.sh $1
+#bash  ./bin/blast_prep_data.sh $1
 
-mkdir .$1.blast_results
+#mkdir .$1.blast_results
 
-makeblastdb -in $2 -parse_seqids -dbtype nucl
+#makeblastdb -in $2 -parse_seqids -dbtype nucl
 
 ls -1 $1.reads >all_$1.reads.txt
 cat all_$1.reads.txt|xargs -d '\n' -P 8 -n 1 -I file blastn -task megablast -query $1.reads/file -db $2 -outfmt 6 -out ./$1.blast_results/file_blast_table.txt
