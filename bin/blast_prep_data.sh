@@ -29,8 +29,3 @@ rm $1.rename.fasta
 cd ..
 
 mkdir $1.blast_results
-
-
-
-
-
