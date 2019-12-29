@@ -4,37 +4,30 @@ args = commandArgs(trailingOnly=TRUE)
 library(Biostrings)
 library(stringr)
 library(IRanges)
-kek=readDNAStringSet("Bp_UK54_R941.flipflop.porechop.ctg.lay.fa")
+#Genome
 kek=readDNAStringSet(args[1])
 
 seq123=seq(1,nchar(kek[[1]]),200)
-kolp=DNAStringSet(x = rep("A",length(seq123)-1))
-
-qoa=lapply(seq123,function(x)
-  {
-  # print(x)
-  if(x<c(length(kek[[1]])-2000))
-  {
-    return(kek[[1]][x:c(x+1000)])
-    
-  }
-})
-listy123=DNAStringSet(unlist(qoa,recursive = T))
-names(listy123)=c(1:length(listy123))
-# for(k in c(1:c(length(seq123)-1)))
-# {
-#   kolp[[k]]=kek[[1]][seq123[k]:c(seq123[k]+1000)]
-#   
-#   
-# }
- writeXStringSet(x = listy123,filepath = "UK54_1kb_200_step.fa")
-
+kolp=DNAStringSet(x = rep("A",c(length(seq123)-10)))
+for(k in c(1:c(length(seq123)-10)))
+{
+  kolp[[k]]=kek[[1]][seq123[k]:c(seq123[k]+1000)]
+  
+ 
+}
+length(kolp)
+names(kolp)=c(1:length(kolp))
+writeXStringSet(x = kolp,filepath = paste(args[1],"_1kb_200_step.fa",sep=""))
+print("first over with")
+#query=readDNAStringSet("UK54_1kb_200_step.fa")
+#head(query)
+#names(query)=c(1:length(query))
+#writeXStringSet(x = query,filepath = "UK54_1kb_200_step.fa")
 
 #Run this command on server to find rep genes:
-system("makeblastdb -in Bp_UK54_R941.flipflop.porechop.ctg.lay.fa -parse_seqids -dbtype nucl")
-system("blastn -task megablast -query UK54_1kb_200_step.fa -db Bp_UK54_R941.flipflop.porechop.ctg.lay.fa -outfmt 6  -out UK54_rep_blast_1kb_200_step_no_redunc")
+system(paste("blastn -task megablast -query",paste(args[1],"_1kb_200_step.fa",sep=""), "-db", args[1]," -outfmt 6  -qcov_hsp_perc 50 -out", paste(args[1],"_blast_redund",sep="")))
 
-UK54_reps=read.delim("UK54_rep_blast_1kb_200_step_no_redunc",row.names = NULL,stringsAsFactors = F,header=F)
+UK54_reps=read.delim(paste(args[1],"_blast_redund",sep=""),row.names = NULL,stringsAsFactors = F,header=F)
 dups=names(table(UK54_reps$V1)[as.numeric(which(table(UK54_reps$V1)>1))])
 dups_1=data.frame(Start_rep=UK54_reps$V9[UK54_reps$V1%in%dups],
                   End_rep=UK54_reps$V10[UK54_reps$V1%in%dups])
@@ -55,6 +48,6 @@ for(k in c(1:nrow(dups_2)))
     
 }
 kek[[1]]=kek[[1]][which(seq==1)]
-writeXStringSet(x = kek,filepath = "UK54_depleted7.fa")
+writeXStringSet(x = kek,filepath = paste(args[1],"_blast_redund_final_data.fa",sep=""))
 data111=data.frame(All=seq)
-write.table(data111,"UK54_depleted_dictionary_genome.txt")
+#write.table(data111,"UK54_depleted_dictionary_genome.txt")
