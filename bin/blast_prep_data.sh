@@ -22,7 +22,7 @@ awk '/^>/{print ">" ++i; next}{print}' < $1.fasta >$1.rename.fasta
 #split into individual reads
 cp $1.rename.fasta ./$1.reads
 cd $1.reads
-split -a 8 -d --additional-suffix=.fa -l 2 all_UK54_final.fasta.rename.fasta
+split --verbose -a 8 -d --additional-suffix=.fa -l 2 $1.rename.fasta
 
 rm $1.rename.fasta
 

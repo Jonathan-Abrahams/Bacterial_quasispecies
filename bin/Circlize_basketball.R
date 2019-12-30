@@ -52,7 +52,20 @@ for(i in c(1:nrow(framey)))
     framey$Category[i]="INV"
   }
 }
+
 framey_OG=framey
+head(framey)
+for(q in c(1:nrow(framey)))
+{
+if(framey$V2[q]>framey$V3[q])
+{
+print(q)
+framey_backup=framey$V2[q]
+framey$V2[q]=framey$V3[q]
+framey$V3[q]=framey_backup
+}
+}
+head(framey)
 write.csv(framey,"Reads.csv")
 
 
