@@ -10,7 +10,7 @@ Rscript remove_reps_from_fasta.R example.fasta
 
 
 Prepare the data by splitting each read to its own file and making folders etc.
-
+The fasta file must be two lines exactly for each entry: one line for the header and one line for the sequence!
 ```bash
 bash  blast_prep_data.sh UK54.fastq
 ```

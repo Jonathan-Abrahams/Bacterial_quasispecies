@@ -56,4 +56,4 @@ for(i in c(1:nrow(ready)))
 print("All_done")
 kolp=data.frame(IS=results_vector)
 kolp=kolp[!is.na(kolp$IS),]
-write.table(kolp,"kolp.txt",col.names = F,row.names = F)
+write.table(kolp,paste(args[3],"_kolp.txt",sep=""),col.names = F,row.names = F)
